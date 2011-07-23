@@ -12,12 +12,19 @@ basePath = args.pop() || basePath;
 
 var fileServer = new static.Server(basePath);
 
+var formatting = {
+    200: '\x1B[32m',
+    304: '\x1B[33m',
+    error: '\x1B[1;31m',
+    end: '\x1B[0m'
+};
+
 http.createServer(function (req, res) {
     req.addListener('end', function () {
         fileServer.serve(req, res, function (err, serveRes) {
             if (err) {
                 // An error as occured
-                sys.error('Error serving ' + req.url + ': ' + err.message);
+                sys.error(formatting.error + 'Error serving ' + req.url + ': ' + err.message + formatting.end);
                 res.writeHead(err.status, err.headers);
                 res.end();
             } else {
@@ -27,7 +34,7 @@ http.createServer(function (req, res) {
                     return !!header;
                 });
 
-                sys.puts(req.method + ' ' + req.url + ' [' + serveRes.status + ' ' + serveRes.message + ']');
+                sys.puts((formatting[serveRes.status] || '') + req.method + ' ' + req.url + ' [' + serveRes.status + ' ' + serveRes.message + ']' + formatting.end);
                 sys.puts(prefix + headers.join('\n' + prefix));
             }
         });
