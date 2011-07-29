@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var static = require('node-static');
 var http = require('http');
 var sys = require('sys');
@@ -42,3 +44,5 @@ http.createServer(function (req, res) {
 }).listen(port);
 
 console.log('Serving %s on port %d', basePath, port);
+
+// vim:syntax=javascript:
