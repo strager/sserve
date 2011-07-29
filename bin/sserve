@@ -9,7 +9,7 @@ require('../lib/server').serve({
     port: port,
     basePath: basePath,
 
-    callback: function () {
+    callback: function (host, port, basePath) {
         console.log('Serving %s on port %d', basePath, port);
     },
     error: function (err) {
