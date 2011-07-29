@@ -6,5 +6,8 @@
     "dependencies": {
         "node-static": "0.5.x"
     },
+    "bin": {
+        "sserve": "bin/sserve"
+    },
     "engine": "node 0.4.x|node 0.5.x"
 }
