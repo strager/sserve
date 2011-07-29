@@ -4,7 +4,8 @@
     "author": "Matt Glazar <matt.glazar@gmail.com>",
     "version": "0.1.0",
     "dependencies": {
-        "node-static": "0.5.x"
+        "node-static": "0.5.x",
+        "optimist": "x.x.x"
     },
     "bin": {
         "sserve": "bin/sserve"
