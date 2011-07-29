@@ -1,48 +1,26 @@
 #!/usr/bin/env node
 
-var static = require('node-static');
-var http = require('http');
-var sys = require('sys');
+var args = require('optimist').argv;
 
-var port = 80;
-var basePath = process.cwd();
+var port = args._.pop();
+var basePath = args._.pop();
 
-var args = process.argv.slice(2);
+require('../lib/server').serve({
+    port: port,
+    basePath: basePath,
 
-port = args.pop() || port;
-basePath = args.pop() || basePath;
+    callback: function () {
+        console.log('Serving %s on port %d', basePath, port);
+    },
+    error: function (err) {
+        console.error('ERROR: ' + err);
 
-var fileServer = new static.Server(basePath);
+        if (err.code === 'EACCES') {
+            console.error('(Did you mean to run sserve as root?)');
+        }
 
-var formatting = {
-    200: '\x1B[32m',
-    304: '\x1B[33m',
-    error: '\x1B[1;31m',
-    end: '\x1B[0m'
-};
-
-http.createServer(function (req, res) {
-    req.addListener('end', function () {
-        fileServer.serve(req, res, function (err, serveRes) {
-            if (err) {
-                // An error as occured
-                sys.error(formatting.error + 'Error serving ' + req.url + ': ' + err.message + formatting.end);
-                res.writeHead(err.status, err.headers);
-                res.end();
-            } else {
-                // The file was served successfully
-                var prefix = ' - ';
-                var headers = res._header.split('\r\n').slice(1).filter(function (header) {
-                    return !!header;
-                });
-
-                sys.puts((formatting[serveRes.status] || '') + req.method + ' ' + req.url + ' [' + serveRes.status + ' ' + serveRes.message + ']' + formatting.end);
-                sys.puts(prefix + headers.join('\n' + prefix));
-            }
-        });
-    });
-}).listen(port);
-
-console.log('Serving %s on port %d', basePath, port);
+        process.exit(1);
+    }
+});
 
 // vim:syntax=javascript:
