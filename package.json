@@ -4,11 +4,11 @@
     "author": "Matt Glazar <matt.glazar@gmail.com>",
     "version": "0.1.0",
     "dependencies": {
-        "node-static": "0.5.x",
-        "optimist": "x.x.x"
+        "node-static": "0.5.9",
+        "optimist": "0.2.8"
     },
     "bin": {
         "sserve": "bin/sserve"
     },
-    "engine": "node 0.4.x|node 0.5.x"
+    "engine": "node 0.4.x|node 0.5.x|node 0.6.x"
 }

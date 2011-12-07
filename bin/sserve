@@ -3,22 +3,36 @@
 var path = require('path');
 var args = require('optimist').argv;
 
-if (args.h || args.help) {
-    console.log('Usage: ' + path.basename(args.$0) + ' [options] [[path] port]');
-    console.log('  Serves via HTTP a file system directory');
-    console.log('');
-    console.log('options:');
-    console.log('  -i          Show incoming headers');
-    console.log('  -o          Show outgoing headers');
-    console.log('  -h, --help  Show this help');
-    console.log('');
-    console.log('path:');
-    console.log('  The directory to serve; defaults to the current directory');
-    console.log('');
-    console.log('port:');
-    console.log('  The port on which to serve; defaults to port 80');
-    console.log('');
+var optimist = require('optimist')
+    .wrap(80)
+    .usage('Usage: $0 [options] [path] port')
+    .describe({
+        'incoming': 'Show incoming headers',
+        'outgoing': 'Show outgoing headers',
+        'help': 'Show this help'
+    })
+    .alias({
+        'incoming': 'i',
+        'outgoing': 'o',
+        'help': 'h'
+    })
+    .boolean([ 'incoming', 'outgoing', 'help', 'i', 'o', 'h' ])
+    .default({
+        'incoming': false,
+        'outgoing': false
+    });
+
+var argv = optimist.argv;
+
+if (argv.help) {
+    optimist.showHelp();
     return;
+}
+
+if (argv._.length !== 1 && argv._.length !== 2) {
+    console.error("Missing port");
+    optimist.showHelp();
+    process.exit(3);
 }
 
 var port = args._.pop();
