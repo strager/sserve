@@ -10,5 +10,7 @@
     "bin": {
         "sserve": "bin/sserve"
     },
-    "engine": "node 0.4.x|node 0.5.x|node 0.6.x"
+    "engines": {
+        "node": "0.4.x || 0.5.x || 0.6.x"
+    }
 }
