@@ -2,7 +2,7 @@
     "name": "sserve",
     "description": "Light-weight static file server",
     "author": "Matt Glazar <matt.glazar@gmail.com>",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "dependencies": {
         "node-static": "0.5.9",
         "optimist": "0.2.8",
