@@ -5,7 +5,9 @@
     "version": "0.2.3",
     "dependencies": {
         "node-static": "0.5.9",
-        "optimist": "0.2.8"
+        "optimist": "0.2.8",
+        "q": "0.7.2",
+        "mu": "0.5.2"
     },
     "bin": {
         "sserve": "bin/sserve"
